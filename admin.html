@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | 3D Printing Collective</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo" id="main-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                </path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            3D <span>Printing Collective</span>
+        </div>
+        <nav class="desktop-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="forum.html">Forum</a></li>
+                <li><a href="bulletin.html">Bulletin</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="login.html" class="dynamic-auth-link">Login</a></li>
+            </ul>
+        </nav>
+        <div class="header-controls">
+            <button id="theme-toggle" aria-label="Toggle Theme">
+                <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="overlay" id="overlay"></div>
+
+    <nav class="nav-menu" id="nav-menu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="schedule.html" target="_blank">Schedule</a></li>
+            <li><a href="calendar.html" target="_blank">Calendar</a></li>
+            <li><a href="booking.html">1-on-1 Booking</a></li>
+            <li><a href="forum.html" target="_blank">Forum</a></li>
+            <li><a href="bulletin.html">Bulletin</a></li>
+            <li><a href="login.html" class="login-btn">Login</a></li>
+        </ul>
+    </nav>
+
+    <main id="admin-main" style="min-height: 80vh; padding-top: 100px; display: none;">
+        <div class="container">
+            <div class="grid-layout" style="grid-template-columns: 1fr 1fr; gap: 40px;">
+
+                <!-- Event Creator -->
+                <div class="booking-form blueprint-line" data-label="EVENT_CREATOR">
+                    <h2 class="section-title">New Event</h2>
+                    <form id="event-form">
+                        <div class="form-group">
+                            <label for="event-title">TITLE</label>
+                            <input type="text" id="event-title" placeholder="Workshop / Meetup" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-date">DATE</label>
+                            <input type="date" id="event-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-time">TIME</label>
+                            <input type="time" id="event-time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-location">LOCATION</label>
+                            <input type="text" id="event-location" placeholder="Standard Workshop / Remote" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-desc">DESCRIPTION</label>
+                            <textarea id="event-desc" rows="4"
+                                placeholder="Brief details about the event..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Create & Stage</button>
+                    </form>
+                </div>
+
+                <!-- Sync Assistant -->
+                <div class="booking-form blueprint-line" data-label="MEETUP_SYNC_ASSISTANT">
+                    <h2 class="section-title">Meetup Helper</h2>
+                    <p style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">Since we are avoiding
+                        Meetup API fees, use this helper to copy-paste your latest events.</p>
+
+                    <div id="sync-preview"
+                        style="background: var(--bg-color); border: 1px solid var(--border-color); padding: 20px; margin-bottom: 20px; display: none;">
+                        <div id="preview-data">
+                            <!-- Preview injected -->
+                        </div>
+                        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button id="btn-copy-title" class="btn btn-secondary btn-small">Copy Title</button>
+                            <button id="btn-copy-desc" class="btn btn-secondary btn-small">Copy Desc</button>
+                            <a href="https://www.meetup.com/3d-printing-club/events/create/" target="_blank"
+                                class="btn btn-primary btn-small">Open Meetup Create</a>
+                        </div>
+                    </div>
+
+                    <div id="no-event-selected"
+                        style="text-align: center; padding: 40px; color: var(--text-muted); font-family: var(--font-mono);">
+                        [NO_EVENT_STAGED]
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>3D Printing Collective</h3>
+                    <p>The core of local making.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Admin Panel. Internal Use Only.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+
+</html>
